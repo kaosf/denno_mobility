@@ -79,32 +79,32 @@ RSpec.describe SlipsController, type: :request do
     it "status accept" do
       put slip_path(@slip), params: { id: @slip.id, status: "accept" }
       @slip.reload
-      expect(@slip.status).to eq(SLIP_STATUS_ACCEPT)
+      expect(@slip.status).to eq(Slip::STATUS_ACCEPT)
     end
 
     it "status reject" do
       put slip_path(@slip), params: { id: @slip.id, status: "reject" }
       @slip.reload
-      expect(@slip.status).to eq(SLIP_STATUS_REJECT)
+      expect(@slip.status).to eq(Slip::STATUS_REJECT)
     end
 
     it "status pickup" do
       put slip_path(@slip), params: { id: @slip.id, status: "pickup" }
       @slip.reload
-      expect(@slip.status).to eq(SLIP_STATUS_PICKUP)
+      expect(@slip.status).to eq(Slip::STATUS_PICKUP)
     end
 
     it "status deliver" do
       put slip_path(@slip), params: { id: @slip.id, status: "deliver" }
       @slip.reload
-      expect(@slip.status).to eq(SLIP_STATUS_DELIVER)
+      expect(@slip.status).to eq(Slip::STATUS_DELIVER)
     end
 
     it "status complete" do
       put slip_path(@slip),
         params: { id: @slip.id, status: "complete", slip: { get_off_distance: 10, get_off_payment: 1000 } }
       @slip.reload
-      expect(@slip.status).to eq(SLIP_STATUS_COMPLETE)
+      expect(@slip.status).to eq(Slip::STATUS_COMPLETE)
     end
   end
 

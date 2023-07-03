@@ -86,7 +86,7 @@ class SlipsController < ApplicationController
     # 任意属性
     @slip[:data]["attribute"] = @slip_attributes
     # ステータス
-    @slip[:status] = SLIP_STATUS_UNASSIGNED
+    @slip[:status] = Slip::STATUS_UNASSIGNED
 
     if @slip.errors.present?
       # 登録画面再表示用の値設定
@@ -115,17 +115,17 @@ class SlipsController < ApplicationController
     if params[:status].present?
       case params[:status]
       when "accept"
-        @slip[:status] = SLIP_STATUS_ACCEPT
+        @slip[:status] = Slip::STATUS_ACCEPT
         @slip[:updated_user_id] = @current_user[:id]
       when "reject"
-        @slip[:status] = SLIP_STATUS_REJECT
+        @slip[:status] = Slip::STATUS_REJECT
         @slip[:updated_user_id] = @current_user[:id]
       when "pickup"
-        @slip[:status] = SLIP_STATUS_PICKUP
+        @slip[:status] = Slip::STATUS_PICKUP
         @slip[:updated_user_id] = @current_user[:id]
         @slip[:data]["pickup_start_time"] = Time.zone.now
       when "deliver"
-        @slip[:status] = SLIP_STATUS_DELIVER
+        @slip[:status] = Slip::STATUS_DELIVER
         @slip[:updated_user_id] = @current_user[:id]
         @slip[:data]["pickup_time"] = Time.zone.now
       when "complete"
@@ -138,7 +138,7 @@ class SlipsController < ApplicationController
           return
         end
 
-        @slip[:status] = SLIP_STATUS_COMPLETE
+        @slip[:status] = Slip::STATUS_COMPLETE
         @slip[:updated_user_id] = @current_user[:id]
         @slip[:data]["getoff_time"] = Time.zone.now
         @slip[:data]["distance"] = params[:slip][:get_off_distance]
@@ -169,8 +169,8 @@ class SlipsController < ApplicationController
     end
 
     # 受領拒否状態で再度同じ担当者を割り当てた場合、確認中に戻す。
-    if @slip[:status] == SLIP_STATUS_REJECT && @slip[:rep_user_id] == slip_params[:rep_user_id].to_i
-      @slip[:status] = SLIP_STATUS_ASSIGNED
+    if @slip[:status] == Slip::STATUS_REJECT && @slip[:rep_user_id] == slip_params[:rep_user_id].to_i
+      @slip[:status] = Slip::STATUS_ASSIGNED
     end
 
     if @slip.update(slip_params)
@@ -337,7 +337,7 @@ class SlipsController < ApplicationController
       message.save
 
       # 伝票の状態を確認中にする
-      @slip.update(status: SLIP_STATUS_ASSIGNED)
+      @slip.update(status: Slip::STATUS_ASSIGNED)
 
       # メッセージ更新
       user_room = "#{CHAT_CHANNEL_ROOM_PREFIX}f#{@current_user[:id]}_t#{@slip[:rep_user_id]}"

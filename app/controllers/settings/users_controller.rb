@@ -95,7 +95,7 @@ class Settings::UsersController < ApplicationController
     end
 
     slips =
-      Slip.where(company_id: @current_company[:id], rep_user_id: @user[:id]).where.not(status: SLIP_STATUS_COMPLETE)
+      Slip.where(company_id: @current_company[:id], rep_user_id: @user[:id]).where.not(status: Slip::STATUS_COMPLETE)
     if slips.present?
       flash.now[:danger] = "完了状態以外の伝票が割り当てられているユーザーは削除できません。"
       render :edit, status: :unprocessable_entity

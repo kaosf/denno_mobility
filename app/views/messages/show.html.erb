@@ -24,15 +24,15 @@
                     <% # 伝票：送信側が基本管理者のハズなので伝票参照のリンクは常に有効にしておく %>
                     対象日時：<%= @slips_info[message[:data]["slip_id"]][:targeted_at].strftime("%m/%d %H:%M") %><br>
                     <%= link_to "伝票を開く", slip_path(@slips_info[message[:data]["slip_id"]]), { class: "btn btn-warning me-3", data: { turbo_frame: "_top" } } %>
-                    <% if @slips_info[message[:data]["slip_id"]][:status] == SLIP_STATUS_ASSIGNED %>
+                    <% if @slips_info[message[:data]["slip_id"]][:status] == Slip::STATUS_ASSIGNED %>
                       <button class="btn btn-warning disabled">確認中</button>
-                    <% elsif @slips_info[message[:data]["slip_id"]][:status] == SLIP_STATUS_REJECT %>
+                    <% elsif @slips_info[message[:data]["slip_id"]][:status] == Slip::STATUS_REJECT %>
                       <button class="btn btn-danger disabled">拒否済</button>
-                    <% elsif @slips_info[message[:data]["slip_id"]][:status] == SLIP_STATUS_ACCEPT %>
+                    <% elsif @slips_info[message[:data]["slip_id"]][:status] == Slip::STATUS_ACCEPT %>
                       <button class="btn btn-success disabled">受領済</button>
-                    <% elsif @slips_info[message[:data]["slip_id"]][:status].in?([SLIP_STATUS_PICKUP, SLIP_STATUS_DELIVER]) %>
+                    <% elsif @slips_info[message[:data]["slip_id"]][:status].in?([Slip::STATUS_PICKUP, Slip::STATUS_DELIVER]) %>
                       <button class="btn btn-primary disabled">運行中</button>
-                    <% elsif @slips_info[message[:data]["slip_id"]][:status] == SLIP_STATUS_COMPLETE %>
+                    <% elsif @slips_info[message[:data]["slip_id"]][:status] == Slip::STATUS_COMPLETE %>
                       <button class="btn btn-secondary disabled">完了済</button>
                     <% end %>
                   <% end %>
@@ -65,15 +65,15 @@
                       <% # 伝票：受信者側 %>
                       対象日時：<%= @slips_info[message[:data]["slip_id"]][:targeted_at].strftime("%m/%d %H:%M") %><br>
                       <%= link_to "伝票を開く", slip_path(@slips_info[message[:data]["slip_id"]]), { class: "btn btn-warning me-3", data: { turbo_frame: "_top" } } %>
-                      <% if @slips_info[message[:data]["slip_id"]][:status] == SLIP_STATUS_ASSIGNED %>
+                      <% if @slips_info[message[:data]["slip_id"]][:status] == Slip::STATUS_ASSIGNED %>
                         <button class="btn btn-warning disabled">確認中</button>
-                      <% elsif @slips_info[message[:data]["slip_id"]][:status] == SLIP_STATUS_REJECT %>
+                      <% elsif @slips_info[message[:data]["slip_id"]][:status] == Slip::STATUS_REJECT %>
                         <button type="button" class="btn btn-danger disabled " href="">拒否済</button>
-                      <% elsif @slips_info[message[:data]["slip_id"]][:status] == SLIP_STATUS_ACCEPT %>
+                      <% elsif @slips_info[message[:data]["slip_id"]][:status] == Slip::STATUS_ACCEPT %>
                         <button class="btn btn-success disabled " href="">受領済</button>
-                      <% elsif @slips_info[message[:data]["slip_id"]][:status].in?([SLIP_STATUS_PICKUP, SLIP_STATUS_DELIVER]) %>
+                      <% elsif @slips_info[message[:data]["slip_id"]][:status].in?([Slip::STATUS_PICKUP, Slip::STATUS_DELIVER]) %>
                         <button class="btn btn-primary disabled " href="">運行中</button>
-                      <% elsif @slips_info[message[:data]["slip_id"]][:status] == SLIP_STATUS_COMPLETE %>
+                      <% elsif @slips_info[message[:data]["slip_id"]][:status] == Slip::STATUS_COMPLETE %>
                         <button class="btn btn-secondary disabled " href="">完了済</button>
                       <% end %>
                     <% end %>

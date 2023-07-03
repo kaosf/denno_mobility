@@ -108,7 +108,7 @@ RSpec.describe Settings::UsersController, type: :request do
       before { @slip = create :slip, company: current_company, user: @user }
 
       # assertion
-      it { expect(@slip.status).not_to eq SLIP_STATUS_COMPLETE }
+      it { expect(@slip.status).not_to eq Slip::STATUS_COMPLETE }
 
       it do
         subject

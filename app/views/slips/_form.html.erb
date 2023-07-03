@@ -16,19 +16,19 @@
   <% if is_show %>
     <div class="row mb-2">
       <div class="col fs-2">
-        <% if @slip[:status] == SLIP_STATUS_UNASSIGNED %>
+        <% if @slip[:status] == Slip::STATUS_UNASSIGNED %>
           <div class="text-warning">担当者未割当</div>
-        <% elsif @slip[:status] == SLIP_STATUS_ASSIGNED %>
+        <% elsif @slip[:status] == Slip::STATUS_ASSIGNED %>
           <div class="text-warning">担当者確認中</div>
-        <% elsif @slip[:status] == SLIP_STATUS_REJECT %>
+        <% elsif @slip[:status] == Slip::STATUS_REJECT %>
           <div class="text-danger">受領拒否</div>
-        <% elsif @slip[:status] == SLIP_STATUS_ACCEPT %>
+        <% elsif @slip[:status] == Slip::STATUS_ACCEPT %>
           <div class="text-primary">受領済み</div>
-        <% elsif @slip[:status] == SLIP_STATUS_PICKUP %>
+        <% elsif @slip[:status] == Slip::STATUS_PICKUP %>
           <div class="text-primary"><%= "#{@pickup_start_time.strftime("%H:%M")}に迎車状態になりました。" %></div>
-        <% elsif @slip[:status] == SLIP_STATUS_DELIVER %>
+        <% elsif @slip[:status] == Slip::STATUS_DELIVER %>
           <div class="text-primary"><%= "#{@pickup_time.strftime("%H:%M")}に乗車状態になりました。" %></div>
-        <% elsif @slip[:status] == SLIP_STATUS_COMPLETE %>
+        <% elsif @slip[:status] == Slip::STATUS_COMPLETE %>
           <div class="text-success">完了</div>
         <% end %>
       </div>
@@ -36,7 +36,7 @@
   <% end %>
 
   <div class="row mb-2">
-    <% if is_show && @slip[:status] == SLIP_STATUS_ASSIGNED && @current_user[:id] == @slip[:rep_user_id] %>
+    <% if is_show && @slip[:status] == Slip::STATUS_ASSIGNED && @current_user[:id] == @slip[:rep_user_id] %>
       <div class="col">
         <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modal_slip_accept"> 受領 </button>
       </div>
@@ -44,19 +44,19 @@
         <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#modal_slip_reject"> 拒否 </button>
       </div>
     <% end %>
-    <% if is_show && @slip[:status] == SLIP_STATUS_ACCEPT && (@is_admin || @current_user[:id] == @slip[:rep_user_id]) %>
+    <% if is_show && @slip[:status] == Slip::STATUS_ACCEPT && (@is_admin || @current_user[:id] == @slip[:rep_user_id]) %>
       <div class="col">
         <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modal_slip_pickup"> 迎車状態に変更 </button>
       </div>
     <% end %>
-    <% if is_show && @slip[:status] == SLIP_STATUS_PICKUP && (@is_admin || @current_user[:id] == @slip[:rep_user_id]) %>
+    <% if is_show && @slip[:status] == Slip::STATUS_PICKUP && (@is_admin || @current_user[:id] == @slip[:rep_user_id]) %>
       <div class="col">
         <button type="button" class="btn btn-info w-100" data-bs-toggle="modal" data-bs-target="#modal_slip_deliver"> 乗車状態に変更 </button>
       </div>
     <% end %>
-    <% if is_show && @slip[:status] == SLIP_STATUS_DELIVER && (@is_admin || @current_user[:id] == @slip[:rep_user_id]) %>
+    <% if is_show && @slip[:status] == Slip::STATUS_DELIVER && (@is_admin || @current_user[:id] == @slip[:rep_user_id]) %>
       <div class="col">
-        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal_slip_status_complete"> 降車し完了する </button>
+        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal_Slip::STATUS_complete"> 降車し完了する </button>
       </div>
     <% end %>
   </div>
@@ -236,7 +236,7 @@
           <%= form.submit "登録", { class: "btn btn-warning w-100" } %>
         </div>
       <% end %>
-      <% if is_show && @is_admin && @slip[:status] != SLIP_STATUS_COMPLETE %>
+      <% if is_show && @is_admin && @slip[:status] != Slip::STATUS_COMPLETE %>
         <div class="col">
           <%= link_to "削除", slip_path(@slip), class: "btn btn-danger w-100", data: { turbo_method: :delete, turbo_confirm: "伝票を削除しますか？" } %>
         </div>
@@ -320,7 +320,7 @@
 </div>
 
 <!-- 運行完了確認モーダル -->
-<div class="modal fade" id="modal_slip_status_complete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="modal_Slip::STATUS_complete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <%= form_with(model: @slip, url: url) do |form| %>

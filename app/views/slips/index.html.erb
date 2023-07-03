@@ -33,37 +33,37 @@
                     <% slip_text = "#{slip[:name]}" %>
                   <% end %>
 
-                  <% if slip[:status] == SLIP_STATUS_COMPLETE %>
+                  <% if slip[:status] == Slip::STATUS_COMPLETE %>
                     <%= link_to slip_path(slip), { class: "col p-1 m-1 h-auto bg-secondary rounded text-white text-nowrap text-decoration-none" } do %>
                       <p>完了<%= slip[:targeted_at].strftime("%H:%M") %></p></p>
                       <p><%= slip_text %></p>
                     <% end %>
-                  <% elsif slip[:status] == SLIP_STATUS_UNASSIGNED %>
+                  <% elsif slip[:status] == Slip::STATUS_UNASSIGNED %>
                     <%= link_to slip_path(slip), { class: "col p-1 m-1 h-auto bg-warning rounded text-dark text-nowrap text-decoration-none" } do %>
                       <p>未割当<%= slip[:targeted_at].strftime("%H:%M") %></p>
                       <p><%= slip_text %></p>
                     <% end %>
-                  <% elsif slip[:status] == SLIP_STATUS_ASSIGNED %>
+                  <% elsif slip[:status] == Slip::STATUS_ASSIGNED %>
                     <%= link_to slip_path(slip), { class: "col p-1 m-1 h-auto bg-warning rounded text-dark text-nowrap text-decoration-none" } do %>
                       <p>確認中<%= slip[:targeted_at].strftime("%H:%M") %></p>
                       <p><%= slip_text %></p>
                     <% end %>
-                  <% elsif slip[:status] == SLIP_STATUS_REJECT %>
+                  <% elsif slip[:status] == Slip::STATUS_REJECT %>
                     <%= link_to slip_path(slip), { class: "col p-1 m-1 h-auto bg-danger rounded text-white text-nowrap text-decoration-none" } do %>
                       <p>拒否<%= slip[:targeted_at].strftime("%H:%M") %></p>
                       <p><%= slip_text %></p>
                     <% end %>
-                  <% elsif slip[:status] == SLIP_STATUS_ACCEPT %>
+                  <% elsif slip[:status] == Slip::STATUS_ACCEPT %>
                     <%= link_to slip_path(slip), { class: "col p-1 m-1 h-auto bg-success rounded text-white text-nowrap text-decoration-none" } do %>
                       <p>受領<%= slip[:targeted_at].strftime("%H:%M") %></p>
                       <p><%= slip_text %></p>
                     <% end %>
-                  <% elsif slip[:status] == SLIP_STATUS_PICKUP %>
+                  <% elsif slip[:status] == Slip::STATUS_PICKUP %>
                     <%= link_to slip_path(slip), { class: "col p-1 m-1 h-auto bg-primary rounded text-white text-nowrap text-decoration-none" } do %>
                       <p>迎車中<%= slip[:targeted_at].strftime("%H:%M") %></p>
                       <p><%= slip_text %></p>
                     <% end %>
-                  <% elsif slip[:status] == SLIP_STATUS_DELIVER %>
+                  <% elsif slip[:status] == Slip::STATUS_DELIVER %>
                     <%= link_to slip_path(slip), { class: "col p-1 m-1 h-auto bg-primary rounded text-white text-nowrap text-decoration-none" } do %>
                       <p>実車中<%= slip[:targeted_at].strftime("%H:%M") %></p>
                       <p><%= slip_text %></p>
